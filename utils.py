@@ -40,4 +40,27 @@ def tegify_content(content):
             words[i] = link
     return " ".join(words)
 
-# tegify_content("#egg #peece world #travel")
+def search_func(posts, search_query):
+    searched_posts = []
+    if search_query:
+        for post in posts:
+            if search_query in post["content"]:
+                post["content"] = post["content"][:50]
+                searched_posts.append(post)
+    return searched_posts
+
+
+def user_posts_func(posts, username):
+    user_posts = []
+    for post in posts:
+        if post["poster_name"] == username:
+            post["content"] = post["content"]#[:50]
+            user_posts.append(post)
+    return user_posts
+
+def post_comment_func(comments, postid=1):
+    post_comments = []
+    for post_comment in comments:
+        if post_comment['post_id'] == int(postid):
+            post_comments.append(post_comment)
+    return post_comments
