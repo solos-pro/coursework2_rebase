@@ -45,17 +45,17 @@ def search_func(posts, search_query):
     if search_query:
         for post in posts:
             if search_query in post["content"]:
-                post["content"] = post["content"][:50]
+                # post["content"] = post["content"][:50]
                 searched_posts.append(post)
     return searched_posts
 
 
 def user_posts_func(posts, username):
     user_posts = []
-    for post in posts:
-        if post["poster_name"] == username:
-            post["content"] = post["content"]#[:50]
-            user_posts.append(post)
+    for post_ in posts:
+        if post_["poster_name"] == username:
+            post_["content"] = post_["content"]#[:50]
+            user_posts.append(post_)
     return user_posts
 
 def post_comment_func(comments, postid=1):
