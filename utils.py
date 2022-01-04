@@ -1,6 +1,22 @@
 import json
 from pprint import pprint
 
+def bookmark_read():
+    with open('data/bookmarks.json') as fp:
+        bookmarks = json.load(fp)
+    return bookmarks
+
+def bookmark_write(post):
+    bookmarks = bookmark_read()
+
+    if post not in bookmarks:
+        bookmarks.append(post)
+    else:
+        bookmarks.remove(post)
+
+    with open('data/bookmarks.json', 'w', encoding='utf-8') as file:
+        json.dump(bookmarks, file, ensure_ascii=False, indent=4, sort_keys=True)
+
 
 def load_data():
     with open('data/data.json') as fp:
@@ -64,3 +80,11 @@ def post_comment_func(comments, postid=1):
         if post_comment['post_id'] == int(postid):
             post_comments.append(post_comment)
     return post_comments
+
+def tag_func(posts, tag_word):
+    tag_posts = []
+    for post in posts:
+        if ("#" + tag_word) in post['content']:
+            tag_posts.append(post)
+    return tag_posts
+
