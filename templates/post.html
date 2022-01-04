@@ -33,8 +33,8 @@
             </div>
             <span class="item__username">{{ posts.poster_name }}</span>
           </a>
-          <form action="/post/{{ posts.pk }}" method="POST">
-            <button type="button" class="item__bookmark-btn" name="bookmark" value="">
+          <form action="/posts/{{ posts.pk }}/" method="POST">
+            <button type="submit" class="item__bookmark-btn" name="bookmark" value="">
               <img src="{{url_for('static', filename='img/bookmark.png')}}" alt="" class="item__bookmark-icon" width="24">
             </button>
           </form>

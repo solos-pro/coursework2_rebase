@@ -33,13 +33,18 @@ def user_feed(username):
 
 @app.route("/posts/<int:postid>/", methods=["GET", "POST"])
 def post(postid):
+
     bookmarks == bookmark_read()
+    post_comments = post_comment_func(comments, postid)
+
     if request.method == "POST":
         print('post-method')
         bookmark_write(postid)
     if request.method == "GET":
-        post_comments = post_comment_func(comments, postid)
-        return render_template("post.html", posts=posts[postid-1], comments=post_comments)
+        print('get-method')
+
+    print(bookmark_read())
+    return render_template("post.html", posts=posts[postid-1], comments=post_comments)
 
 
 '''
