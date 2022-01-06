@@ -17,6 +17,16 @@ def bookmark_write(post):
     with open('data/bookmarks.json', 'w', encoding='utf-8') as file:
         json.dump(bookmarks, file, ensure_ascii=False, indent=4, sort_keys=True)
 
+def get_bookmarked_posts(posts):
+    bookmarks = bookmark_read()
+    bookmarked_posts = []
+    if bookmarks:
+        for bookmark in bookmarks:
+            for post in posts:
+                if post["pk"] == bookmark:
+                    bookmarked_posts.append(post)
+    return bookmarked_posts
+
 
 def load_data():
     with open('data/data.json') as fp:

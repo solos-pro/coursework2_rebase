@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, url_for
+from flask import Flask, request, render_template, redirect, url_for, jsonify
 from utils import *
 from pprint import pprint
 import os
@@ -34,31 +34,27 @@ def user_feed(username):
 @app.route("/posts/<int:postid>/", methods=["GET", "POST"])
 def post(postid):
 
-    bookmarks == bookmark_read()
+    # bookmarks == bookmark_read()
     post_comments = post_comment_func(comments, postid)
 
     if request.method == "POST":
-        print('post-method')
         bookmark_write(postid)
-    if request.method == "GET":
-        print('get-method')
 
-    print(bookmark_read())
     return render_template("post.html", posts=posts[postid-1], comments=post_comments)
 
 
-'''
-@app.route("/posts/<int:post_id>/like/", methods=["POST"])
-def post_like(post_id):
-    """ Ставим лайк. """
-    return jsonify()
 
+@app.route("/bookmarks/", )
+def bookmarks():
+    bookmarked_posts = get_bookmarked_posts(posts)
+    return render_template("bookmarks.html", posts=bookmarked_posts)
 
-@app.route("/posts/<int:post_id>/dislike/", methods=["POST"])
-def post_dislike(post_id):
-    """ Ставим дизлайк. """
-     return jsonify()
-'''
+# @app.route("/posts/<int:post_id>/like/", methods=["POST"])
+# def post_like(post_id):
+#     """ Ставим лайк (закладку/bookmark). """
+#     if request.method == "POST":
+#         bookmark_write(post_id)
+#     return redirect(request.referrer)
 
 
 if __name__ == "__main__":
