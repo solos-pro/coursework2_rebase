@@ -33,7 +33,6 @@ def load_comment():
     return comments
 
 def write_comment(comments, name, comment, postid):
-    pprint(comment)
     new_pk = 1
     for element in comments:
         if element["pk"] >= new_pk:
@@ -45,7 +44,6 @@ def write_comment(comments, name, comment, postid):
         "post_id": postid,
         "pk": new_pk
     }
-    pprint(new_comment)
     comments.append(new_comment)
 
     with open('data/comments.json', 'w', encoding='utf-8') as file:

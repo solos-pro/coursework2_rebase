@@ -44,7 +44,6 @@ def post(postid):
         else:
             name = request.form.get("commenter_name")
             comment = request.form.get("comment")
-            # pk = posts[postid-1]["comment_count"] + 1
 
             if(name and comment):
                 write_comment(comments, name, comment, postid)
