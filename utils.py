@@ -27,6 +27,31 @@ def get_bookmarked_posts(posts):
                     bookmarked_posts.append(post)
     return bookmarked_posts
 
+def load_comment():
+    with open('data/comments.json') as fp:
+        comments = json.load(fp)
+    return comments
+
+def write_comment(comments, name, comment, postid):
+    pprint(comment)
+    new_pk = 1
+    for element in comments:
+        if element["pk"] >= new_pk:
+            new_pk = element["pk"] + 1
+
+    new_comment = {
+        "commenter_name": name,
+        "comment": comment,
+        "post_id": postid,
+        "pk": new_pk
+    }
+    pprint(new_comment)
+    comments.append(new_comment)
+
+    with open('data/comments.json', 'w', encoding='utf-8') as file:
+        json.dump(comments, file, ensure_ascii=False, indent=4, sort_keys=True)
+    return 0
+
 
 def load_data():
     with open('data/data.json') as fp:
@@ -87,7 +112,7 @@ def user_posts_func(posts, username):
 def post_comment_func(comments, postid=1):
     post_comments = []
     for post_comment in comments:
-        if post_comment['post_id'] == int(postid):
+        if post_comment['post_id'] == postid:
             post_comments.append(post_comment)
     return post_comments
 

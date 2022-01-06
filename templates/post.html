@@ -30,7 +30,7 @@
             <span class="item__username">{{ posts.poster_name }}</span>
           </a>
           <form action="/posts/{{ posts.pk }}/" method="POST">
-            <button type="submit" class="item__bookmark-btn" name="bookmark" value="">
+            <button type="submit" class="item__bookmark-btn" name="bookmark" value="change">
               <img src="{{url_for('static', filename='img/bookmark.png')}}" alt="like/dislike" class="item__bookmark-icon" width="24">
             </button>
           </form>
@@ -62,12 +62,12 @@
             </ol>
           </div>
 
-          <form action="/" class="item__comment-form comment-form">
+          <form action="/posts/{{posts.pk}}/" class="item__comment-form comment-form" method="POST">
             <div class="comment-form__input-wrap">
-              <input type="search" class="comment-form__input" placeholder="Ваше имя">
+              <input type="search" class="comment-form__input" placeholder="Ваше имя" name="commenter_name">
             </div>
             <div class="comment-form__input-wrap">
-              <textarea class="comment-form__textarea" placeholder="Ваш комментарий" rows="6"></textarea>
+              <textarea class="comment-form__textarea" placeholder="Ваш комментарий" rows="6" name="comment"></textarea>
             </div>
             <button type="submit" class="comment-form__btn">Отправить</button>
           </form>

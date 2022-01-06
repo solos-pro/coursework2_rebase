@@ -1,7 +1,6 @@
-from flask import Flask, request, render_template, redirect, url_for, jsonify
+from flask import Flask, request, render_template, url_for
 from utils import *
-from pprint import pprint
-import os
+
 
 posts, comments, bookmarks = load_data()
 app = Flask(__name__, static_url_path='/static')
@@ -10,7 +9,6 @@ app = Flask(__name__, static_url_path='/static')
 @app.route("/",)
 def page_index():
     bookmarks = bookmark_read()
-    print(bookmarks)
     return render_template("index.html", posts=posts, num=len(bookmarks))
 
 
@@ -35,12 +33,21 @@ def user_feed(username):
 
 @app.route("/posts/<int:postid>/", methods=["GET", "POST"])
 def post(postid):
-
-    # bookmarks == bookmark_read()
+    _, comments, _ = load_data()
     post_comments = post_comment_func(comments, postid)
 
     if request.method == "POST":
-        bookmark_write(postid)
+        trigger = request.form.get("bookmark")
+        if (trigger == "change"):
+            bookmark_write(postid)
+
+        else:
+            name = request.form.get("commenter_name")
+            comment = request.form.get("comment")
+            # pk = posts[postid-1]["comment_count"] + 1
+
+            if(name and comment):
+                write_comment(comments, name, comment, postid)
 
     return render_template("post.html", posts=posts[postid-1], comments=post_comments)
 
@@ -51,14 +58,7 @@ def bookmarks():
     bookmarked_posts = get_bookmarked_posts(posts)
     return render_template("bookmarks.html", posts=bookmarked_posts)
 
-# @app.route("/posts/<int:post_id>/like/", methods=["POST"])
-# def post_like(post_id):
-#     """ Ставим лайк (закладку/bookmark). """
-#     if request.method == "POST":
-#         bookmark_write(post_id)
-#     return redirect(request.referrer)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
-# app.run(debug=True)
+
